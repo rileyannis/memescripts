@@ -1,2 +1,2 @@
 # memescripts
-Scripting of Memes Done by Procrastinating Teens™
+Scripting of Memes by Procrastinating Teens™
