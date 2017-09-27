@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #I totally stole this off the internet from the reddit bot
 #Gonna rewrite it when I get a second cause I don't like it as it is
 
