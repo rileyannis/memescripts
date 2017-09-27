@@ -7,7 +7,7 @@ def main():
     parser.add_argument("text")
     args = parser.parse_args()
 
-    text = text.upper().split()
+    text = args.text.upper().split()
     out = " ".join([c for s in text for c in s]) + '\n'
     for i in range(1,max([len(s) for s in text])):
         for s in text:
@@ -24,7 +24,7 @@ def main():
             out = out[0:-1] + '\n'
     else:
         out = out[0:-1]
-    print(text)
+    print(out)
 
 if __name__ == "__main__":
     main()
