@@ -11,7 +11,7 @@ import sys
 
 filler = '/'
 
-def cubify(word, subsqaures = True):
+def main(word, subsqaures = True):
     #if not ((word.__len__() >= 5) & (word.isalpha()) & (word.endswith(word[0]))):
     if not ((word.__len__() >= 5) & (word.endswith(word[0]))):
 
@@ -81,7 +81,7 @@ def cubify(word, subsqaures = True):
 
     matrix = ['    ' + row for row in matrix]
 
-    return displayMatrix(matrix)
+    print(displayMatrix(matrix))
 
 
 def displayMatrix(matrix):
@@ -94,11 +94,8 @@ def displayMatrix(matrix):
     return string
 
 
-def main():
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
     args = parser.parse_args()
-    print(cubify(args.input))
-
-if __name__ == "__main__":
-    main()
+    main(args.input)
