@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-#I totally stole this off the internet from the reddit bot
-#Gonna rewrite it when I get a second cause I don't like it as it is
+# I totally stole this off the internet from the reddit bot
+# Gonna rewrite it when I get a second cause I don't like it as it is
 
-#Inputs must be at least 5 characters and start and end with the same letter
+# Inputs must be at least 5 characters and start and end with the same letter
 
 
 import argparse
@@ -11,19 +11,18 @@ import sys
 
 filler = '/'
 
-def cubify(word, subsqaures = True):
-    #if not ((word.__len__() >= 5) & (word.isalpha()) & (word.endswith(word[0]))):
+
+def cubify(word, subsqaures=True):
+    # if not ((word.__len__() >= 5) & (word.isalpha()) & (word.endswith(word[0]))):
     if not ((word.__len__() >= 5) & (word.endswith(word[0]))):
 
         sys.exit(word + " cannot be cubified.")
 
     word = word.upper()
 
-
-    #create matrix filled with placeholder .
+    # create matrix filled with placeholder .
     size = int(word.__len__() / 2 + word.__len__()) + 1
     matrix = [[' ' for x in range(size)] for y in range(size)]
-
 
     gap = int(len(word) / 2)
 
@@ -32,19 +31,19 @@ def cubify(word, subsqaures = True):
         correction = 1
 
     for i in range(len(word)):
-        #write horizontal words
+        # write horizontal words
         matrix[0][gap + i] = word[i]
         matrix[gap][i] = word[i]
         matrix[2*gap - correction][gap + i] = word[i]
         matrix[3*gap - correction][i] = word[i]
 
-        #write vertical words
+        # write vertical words
         matrix[gap + i][0] = word[i]
         matrix[i][gap] = word[i]
         matrix[i][3*gap - correction] = word[i]
         matrix[gap + i][2*gap - correction] = word[i]
 
-    #write diagonal
+    # write diagonal
     for i in range(1,gap):
         matrix[gap - i][i] = filler
         matrix[gap - i][2 * gap + i - correction] = filler
@@ -52,19 +51,17 @@ def cubify(word, subsqaures = True):
         matrix[3 * gap - i - correction][2 * gap + i - correction] = filler
 
     if(subsqaures):
-        #add subsquare
-        #determine at which position subsquare has to be added
+        # add subsquare
+        # determine at which position subsquare has to be added
         amountOfSubsqaures = 0
         if (len(word) < 12):
             amountOfSubsqaures = int(int(len(word) / 2) / 4)
         else:
             amountOfSubsqaures = int(int(len(word) / 2) / 3) - 1
 
-
         positionOfSubsquares = [int(int(len(word)/2)/(amountOfSubsqaures+1)) * (x+1) for x in range(amountOfSubsqaures)]
 
-
-        #actual code of add subsquare
+        # actual code of add subsquare
         for position in positionOfSubsquares:
             for i in range(len(word)):
                 # write horizontal words
@@ -75,7 +72,7 @@ def cubify(word, subsqaures = True):
                 matrix[i + position][gap - position] = word[i]
                 matrix[i + position][3*gap - position - correction] = word[i]
 
-    #making matrix pretty
+    # making matrix pretty
     # matrix = [[x if x != ' ' else ' ' for x in row] for row in matrix]     #replace background with another character
     matrix = [' '.join(row) for row in matrix]
 
@@ -94,11 +91,21 @@ def displayMatrix(matrix):
     return string
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input")
-    args = parser.parse_args()
-    print(cubify(args.input))
+def add_args_to_parser(parser):
+    parser.add_argument('input_string', help='the string to decap')
+
+    return parser
+
+
+def build_parser_standalone():
+    parser = argparse.ArgumentParser(description="cubify a string")
+    return add_args_to_parser(parser)
+
+
+def main(args):
+    print(cubify(args.input_string))
+
 
 if __name__ == "__main__":
-    main()
+    args = build_parser_standalone().parse_args()
+    main(args)

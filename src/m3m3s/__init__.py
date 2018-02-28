@@ -2,6 +2,7 @@ import argparse
 from . import decapitator
 from . import squares
 from . import rot13
+from . import cubify
 
 
 def build_parsers():
@@ -24,6 +25,10 @@ def build_parsers():
     parser_rot13 = subparsers.add_parser('rot13')
     rot13.add_args_to_parser(parser_rot13)
     parser_rot13.set_defaults(func=rot13.main)
+
+    parser_cubify = subparsers.add_parser('cubify')
+    cubify.add_args_to_parser(parser_cubify)
+    parser_cubify.set_defaults(func=cubify.main)
 
     return parser
 
