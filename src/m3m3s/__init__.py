@@ -1,5 +1,6 @@
 import argparse
 from . import decapitator
+from . import squares
 
 
 def build_parsers():
@@ -14,6 +15,10 @@ def build_parsers():
     parser_decap = subparsers.add_parser('decap')
     decapitator.add_args_to_parser(parser_decap)
     parser_decap.set_defaults(func=decapitator.main)
+
+    parser_squares = subparsers.add_parser('squares')
+    squares.add_args_to_parser(parser_squares)
+    parser_squares.set_defaults(func=squares.main)
 
     return parser
 
