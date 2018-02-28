@@ -4,7 +4,9 @@ from . import decapitator
 
 def build_parsers():
     parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(dest="command_name")
+    subparsers.required = True
+
     parser.add_argument('--version', help="output m3m3s' version and halt.",
                         action='version',
                         version=f"m3m3s {__version__}")
