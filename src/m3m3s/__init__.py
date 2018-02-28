@@ -1,6 +1,7 @@
 import argparse
 from . import decapitator
 from . import squares
+from . import rot13
 
 
 def build_parsers():
@@ -19,6 +20,10 @@ def build_parsers():
     parser_squares = subparsers.add_parser('squares')
     squares.add_args_to_parser(parser_squares)
     parser_squares.set_defaults(func=squares.main)
+
+    parser_rot13 = subparsers.add_parser('rot13')
+    rot13.add_args_to_parser(parser_rot13)
+    parser_rot13.set_defaults(func=rot13.main)
 
     return parser
 

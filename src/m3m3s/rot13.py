@@ -14,40 +14,44 @@
 # Also, I should write some "real" code to get my tshirt :D
 
 # I thought about using the argparse thing from the decap script but wanted to try something different
-#this means that I can't take any arguments in if I ever wanted to in the future...
+# this means that I can't take any arguments in if I ever wanted to in the future...
 
-import sys
+import argparse
 
-#this is a terrible way to do this....
 
-ENCRYPTDICT={}
+def add_args_to_parser(parser):
+    parser.add_argument('input_string', help='the string to rot13')
 
-normal="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-encrypted="nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
-for i, char in enumerate(normal): ENCRYPTDICT[char]=encrypted[i]
+    return parser
+
+
+def build_parser_standalone():
+    parser = argparse.ArgumentParser(description="rot13")
+    return add_args_to_parser(parser)
+
+
+ENCRYPTDICT = {}
+
+normal = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+encrypted = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
+
+ENCRYPTDICT = {plain: cipher for plain, cipher in zip(normal, encrypted)}
+
 
 def encrypt(x):
-    if x in ENCRYPTDICT: return ENCRYPTDICT[x]
-    else: return x
+    if x in ENCRYPTDICT:
+        return ENCRYPTDICT[x]
+    else:
+        return x
 
-#grab command line args if present, otherwise look for std in
-def getInput():
 
-    #the .join isn't the best way to do things
-    #(it would ignore things similar to how `echo` does
-    # Basically I'll ignore new lines
-    if len(sys.argv) != 1: return " ".join(sys.argv[1:])
-
-    #adding .strip() because i keep adding newlines and don't want to figureout why right now
-    else: return " ".join(sys.stdin).strip()
-
-def main():
-
-    unencryptedString=getInput()
-
-    encryptedString="".join([encrypt(x) for x in unencryptedString])
+def main(args):
+    unencryptedString = args.input_string
+    encryptedString = "".join([encrypt(x) for x in unencryptedString])
 
     print(encryptedString)
 
+
 if __name__ == "__main__":
-    main()
+    args = build_parser_standalone().parse_args()
+    main(args)
