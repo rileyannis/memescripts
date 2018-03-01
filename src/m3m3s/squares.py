@@ -2,11 +2,18 @@
 
 import argparse
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("text")
-    args = parser.parse_args()
 
+def add_args_to_parser(parser):
+    parser.add_argument("text")
+    return parser
+
+
+def build_parser_standalone():
+    parser = argparse.ArgumentParser(description="square")
+    return add_args_to_parser(parser)
+
+
+def main(args):
     text = args.text.upper().split()
     out = " ".join([c for s in text for c in s]) + '\n'
     for i in range(1,max([len(s) for s in text])):
@@ -26,5 +33,8 @@ def main():
         out = out[0:-1]
     print(out)
 
+
 if __name__ == "__main__":
-    main()
+    args = build_parser_standalone().parse_args()
+    main(args)
+

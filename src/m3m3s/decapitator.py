@@ -2,14 +2,19 @@
 
 import argparse
 
-def get_args():
-    parser = argparse.ArgumentParser(description="decap")
+
+def add_args_to_parser(parser):
     parser.add_argument('input_string', help='the string to decap')
 
-    return parser.parse_args()
+    return parser
 
-def main():
-    args = get_args()
+
+def build_parser_standalone():
+    parser = argparse.ArgumentParser(description="decap")
+    return add_args_to_parser(parser)
+
+
+def main(args):
 
     decapitated_string = ""
     index = 0
@@ -23,5 +28,7 @@ def main():
 
     print(decapitated_string)
 
+
 if __name__ == "__main__":
-    main()
+    args = build_parser_standalone().parse_args()
+    main(args)
